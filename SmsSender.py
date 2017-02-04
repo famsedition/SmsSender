@@ -12,7 +12,7 @@ timeoutsms = 2.0 # 2 secondes
 timeoutussd = 5.0 # 10 secondes
 
 def SmsSender():
-    dbConn = MySQLdb.connect("localhost","root","passer","projet_aie") or die ("could not connect to database")
+    dbConn = MySQLdb.connect("localhost","dbuser","dbpasswd","dbname") or die ("could not connect to database")
     cursor = dbConn.cursor()
     cursor.execute("""SELECT id, tel, msg FROM sms WHERE status='0'""")
     resultat = cursor.fetchone()
@@ -35,7 +35,7 @@ def BalanceChecker():
     	cmd2 = subprocess.Popen(["/usr/bin/gsm-ussd","-c"], stdout=subprocess.PIPE, stderr = subprocess.PIPE)
     	time.sleep(2)
         if len(output1) != 0 :
-            dbConn = MySQLdb.connect("localhost","root","passer","projet_aie") or die ("could not connect to database")
+            dbConn = MySQLdb.connect("localhost","dbuser","dbpasswd","dbname") or die ("could not connect to database")
             cursor = dbConn.cursor()
             cursor.execute("""UPDATE `projet_aie`.`credit` SET `montant_credit` ='%s' WHERE `credit`.`id` = 1"""%(output1)) 
 	    dbConn.commit() 
